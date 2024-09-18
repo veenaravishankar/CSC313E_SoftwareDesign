@@ -18,7 +18,7 @@ class MyA:
 
 class MyB(MyA):
     "A class B that inherits Class A. "
-    # pass
+    pass
 
 
 class MyC(MyA):
@@ -31,7 +31,7 @@ class MyC(MyA):
 
 class MyD(MyB, MyC):
     "A class D that inherits both Classes B and C. Multiple Inheritance. "
-    # pass
+    pass
 
 
 def main():
