@@ -220,12 +220,12 @@ class Graph():
     while not frontier.is_empty():
       s = frontier.dequeue()
       
-      # mark the vertex v as visited and push it on the Stack
+      # mark the vertex v as visited and print it
       (self.vertices[s]).visited = True
       print(self.vertices[s])
-
+    #This is a list comprehension whihc filters for indices i where self.adj_mat[s][i] is not zero, signifying existence of an edge.
       next_nodes = [i for i, e in enumerate(self.adj_mat[s]) if e != 0]
-
+#The level dictionary keeps track of the distance (level) of each vertex from the start. 
       for vertex in next_nodes:
         if not self.vertices[vertex].visited:
           (self.vertices[vertex]).visited = True
