@@ -223,8 +223,9 @@ class Graph():
       # mark the vertex v as visited and print it
       (self.vertices[s]).visited = True
       print(self.vertices[s])
-    #This is a list comprehension whihc filters for indices i where self.adj_mat[s][i] is not zero, signifying existence of an edge.
+    #This is a list comprehension whihc filters for indices i where it checks the adjacency matrix value is non-zero, looking for an edge.
       next_nodes = [i for i, e in enumerate(self.adj_mat[s]) if e != 0]
+      
 #The level dictionary keeps track of the distance (level) of each vertex from the start. 
       for vertex in next_nodes:
         if not self.vertices[vertex].visited:
