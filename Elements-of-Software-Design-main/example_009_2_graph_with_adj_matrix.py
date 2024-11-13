@@ -189,11 +189,11 @@ class Graph():
       else:
         (self.vertices[u]).visited = True
         print(self.vertices[u]) # output this vertex. 
-        # Add the finishing time for this vertex. 
+        # Add the discovery time for this vertex. 
         discover_times[u] = time_counter        
         the_stack.push(u)
     
-    # the stack is empty, let us rest the flags
+    # the stack is empty, let us reset the flags
     for i in range(len(self.vertices)):
       (self.vertices[i]).visited = False
     
