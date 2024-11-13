@@ -163,40 +163,41 @@ class Graph():
     # create the Stack
     the_stack = Stack()
 
-    # mark the vertex v as visited and push it on the Stack
+    # mark the starting vertex v as visited and push it on the Stack
     (self.vertices[v]).visited = True
-
+    #keep track of visited order by printing
     print(self.vertices[v])
     
-
+    #push the start index on stack
     the_stack.push(v)
+    #keep a timer to track the order in which nodes are discovered while visited and a dictionary to hold these values for each node
     time_counter = 1
-    
-    finish_times = dict()
-    finish_times[v] = time_counter
+    discover_times = dict()
+    discover_times[v] = time_counter
 
 
-    # visit all the other vertices according to depth
+    # visit all the other vertices according to depth, based on the adj matrix
     while(not the_stack.is_empty()):
       # get an adjacent unvisited vertex
       u = self.get_adj_unvisited_vertex(the_stack.peek())     
       time_counter += 1   
-      
+
+      #if there is no adjacent vertex, pop the node
       if u == -1:
         u = the_stack.pop()
         time_counter += 1
       else:
         (self.vertices[u]).visited = True
-        print(self.vertices[u]) # output this vertext. 
+        print(self.vertices[u]) # output this vertex. 
         # Add the finishing time for this vertex. 
-        finish_times[u] = time_counter        
+        discover_times[u] = time_counter        
         the_stack.push(u)
     
     # the stack is empty, let us rest the flags
     for i in range(len(self.vertices)):
       (self.vertices[i]).visited = False
     
-    print(finish_times)
+    print(discover_times)
 
 
 ###########################################
