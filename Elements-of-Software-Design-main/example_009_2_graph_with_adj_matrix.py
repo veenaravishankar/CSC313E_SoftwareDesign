@@ -155,50 +155,48 @@ class Graph():
   ###########################################
 
 
-  def dfs(self, v):
-    '''
-    Do a Depth First Search in a given Graph. 
-    '''
+      def dfs(self, start):
+        '''
+        Perform Depth-First Search (DFS) on the graph starting from vertex `start`.
+        '''
+        # Initialize the stack, counters, and dictionaries
+        the_stack = Stack()
+        discovery_time = 1
+        finish_time = 1
+        discover_times = {}  # Tracks discovery times
+        finish_times = {}  # Tracks finish times
+        time_counter = 1
 
-    # create the Stack
-    the_stack = Stack()
+        # Mark all vertices as unvisited initially
+        for vertex in self.vertices:
+            vertex.visited = False
 
-    # mark the starting vertex v as visited and push it on the Stack
-    (self.vertices[v]).visited = True
-    #keep track of visited order by printing
-    print(self.vertices[v])
-    
-    #push the start index on stack
-    the_stack.push(v)
-    #keep a timer to track the order in which nodes are discovered while visited and a dictionary to hold these values for each node
-    time_counter = 1
-    discover_times = dict()
-    discover_times[v] = time_counter
+        # Start DFS from the given vertex
+        the_stack.push(start)
 
+        while not the_stack.is_empty():
+            current = the_stack.peek()
 
-    # visit all the other vertices according to depth, based on the adj matrix
-    while(not the_stack.is_empty()):
-      # get an adjacent unvisited vertex
-      u = self.get_adj_unvisited_vertex(the_stack.peek())     
-      time_counter += 1   
+            # If the current vertex has not been visited, it's a discovery
+            if not self.vertices[current].visited:
+                self.vertices[current].visited = True
+                discover_times[current] = time_counter
+                time_counter += 1
 
-      #if there is no adjacent vertex, pop the node
-      if u == -1:
-        u = the_stack.pop()
-        time_counter += 1
-      else:
-        (self.vertices[u]).visited = True
-        print(self.vertices[u]) # output this vertex. 
-        # Add the discovery time for this vertex. 
-        discover_times[u] = time_counter        
-        the_stack.push(u)
-    
-    # the stack is empty, let us reset the flags
-    for i in range(len(self.vertices)):
-      (self.vertices[i]).visited = False
-    
-    print(discover_times)
+            # Find an unvisited adjacent vertex
+            next_vertex = self.get_adj_unvisited_vertex(current)
 
+            if next_vertex == -1:  # No adjacent unvisited vertices, so finish this vertex
+                finish_times[current] = time_counter
+                time_counter += 1
+                the_stack.pop()  # Backtrack by popping the stack
+            else:
+                # If there is an adjacent unvisited vertex, push it to the stack
+                the_stack.push(next_vertex)
+
+        # Output discovery and finish times
+        print('Discover Time:', discover_times)
+        print('Finish Time:', finish_times)
 
 ###########################################
 
