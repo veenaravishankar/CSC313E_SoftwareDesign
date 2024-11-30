@@ -5,15 +5,16 @@ def dijkstra(graph, start_node):
     
     visited = set() # A list to mark visited nodes. 
     parent_map = {} # A list to store parent of each node 
-    pq = [] # A list as a priority queue 
+    pq = [] # A list as a priority queue, a min-heap
 
-
+    # defaultdict is a dictionary. Here, lambda: float('inf') creates a function that initially represent an unreachable or infinite distance to all other nodes. 
     node_distances = defaultdict(lambda: float('inf')) # Initial all node distances to infinity 
     node_distances[start_node] = 0
 
-
+    # put the start node on your min heap
     heap.heappush(pq, (0, start_node))
-
+    
+    #apply the alogrithm until the priority queue is not empty
     while pq:
         # We search greedily by always extending the shorter cost nodes first	
         _, node = heap.heappop(pq)
