@@ -17,6 +17,7 @@ def dijkstra(graph, start_node):
     #apply the alogrithm until the priority queue is not empty
     while pq:
         # We search greedily by always extending the shorter cost nodes first	
+        # Using _ is a convention for ignoring values that are not needed, as pop already removes the lowest distance node
         _, node = heap.heappop(pq)
 
         visited.add(node)
