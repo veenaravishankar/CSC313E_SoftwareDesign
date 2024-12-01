@@ -9,6 +9,7 @@ def bellman_ford(graph, source):
     vertices = list(graph.keys())
     num_vertices = len(vertices)
 
+    #The middle and inner loops ensure every vertex and its outgoing edges are considered in iteration
     for _ in range(num_vertices - 1):
         for vertex in vertices:
             for neighbor, weight in graph[vertex]:
