@@ -5,6 +5,9 @@ class Node():
         self.key = key
         self.lChild = None
         self.rChild = None
+"""It prints the right subtree first, then the current node, then the left subtree.
+The level parameter controls indentation: each level adds 4 spaces before the node key.
+This creates a "sideways" tree where the root is toward the left, the right child is higher, and the left child is lower."""
 
     def print_node(self, level=0):
         if self.rChild != None:
