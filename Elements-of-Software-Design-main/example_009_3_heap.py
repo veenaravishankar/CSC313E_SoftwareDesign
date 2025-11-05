@@ -1,121 +1,93 @@
 import sys
-class Max_heap:
+class MaxHeap:
     '''
-    Max Heap Implementation in Python
+    Max Heap Implementation in Python (0-based index)
     '''
     def __init__(self):
-        '''
-        On this implementation the heap list is initialized with a value
-        '''
-        # We do not use the index 0 
-        # Index zero is always a very large number as placeholder. 
-        self.heap_list = [sys.maxsize]
+        self.heap_list = []  # now purely 0-based, no dummy at index 0
 
     @property
     def size(self):
         '''Returns the size of this heap'''
-        return len(self.heap_list) - 1 
- 
+        return len(self.heap_list)
 
     def parent(self, index):
-        ''' Return the parent of a node at index'''
-        return index // 2
-
+        '''Return the parent index of a node at index'''
+        return (index - 1) // 2
 
     def l_child(self, index):
-        '''Return the position of the left child node of a given index'''
-        return 2 * index
+        '''Return the index of the left child node of a given index'''
+        return 2 * index + 1
 
     def r_child(self, index):
-        '''Return the position of the right child node of a given index'''
-        return (2 * index) + 1
+        '''Return the index of the right child node of a given index'''
+        return 2 * index + 2
 
     def is_leaf(self, index):
-        ''' Returns true if the given index is a leaf node'''
-        return index * 2 > self.size 
+        '''Returns true if the given index is a leaf node'''
+        return self.l_child(index) >= self.size
 
-
-    def swap(self, from_pos, to_pos):
-        '''A helper function to swap two nodes of the heap'''
-        self.heap_list[from_pos], self.heap_list[to_pos] = self.heap_list[to_pos], self.heap_list[from_pos]
-        
+    def swap(self, i, j):
+        '''Swap two nodes in the heap'''
+        self.heap_list[i], self.heap_list[j] = self.heap_list[j], self.heap_list[i]
 
     def insert(self, element):
         '''
-        It inserts an element to the heap structure and maintain the heap property. 
+        Insert an element into the heap and maintain heap property
         '''
         self.heap_list.append(element)
+        current = self.size - 1
 
-        current = self.size
-
-        while (self.heap_list[current] > self.heap_list[self.parent(current)]):
+        while current > 0 and self.heap_list[current] > self.heap_list[self.parent(current)]:
             self.swap(current, self.parent(current))
             current = self.parent(current)
 
-
- 
-    def __str__(self):
-        '''A simple str function to print the contents of the heap'''
-        return str(self.heap_list)
-
     def max_heapify(self, i):
         '''
-        # Function to heapify the node at index
+        Heapify node at index i
         '''
         l = self.l_child(i)
         r = self.r_child(i)
+        largest = i
 
-        if l <= self.size and self.heap_list[l] > self.heap_list[i]:
+        if l < self.size and self.heap_list[l] > self.heap_list[largest]:
             largest = l
-        else:
-            largest = i
 
-        if r <= self.size and self.heap_list[r] > self.heap_list[largest]:
-            largest = r 
+        if r < self.size and self.heap_list[r] > self.heap_list[largest]:
+            largest = r
 
-        if largest != i :
+        if largest != i:
             self.swap(i, largest)
             self.max_heapify(largest)
 
-
     def build_max_heap(self, unsorted_list):
-
-        # Set the max possible number to the begining of the list 
-        unsorted_list.insert(0, sys.maxsize)
-
-        self.heap_list = unsorted_list
-
-        for i in range(len(unsorted_list) // 2 , 1, -1):
+        '''
+        Build a max heap from an unsorted list
+        '''
+        self.heap_list = unsorted_list[:]
+        for i in range((self.size // 2) - 1, -1, -1):
             self.max_heapify(i)
-            
-
-
-
 
     def extract_max(self):
-        '''Extracts the max of this heap'''
+        '''
+        Extract and return the maximum element from the heap
+        '''
+        if self.size == 0:
+            return None
+        if self.size == 1:
+            return self.heap_list.pop()
 
-        # 1. pop the root of the tree which is on the index 1 of the list 
-        popped = self.heap_list.pop(1)
-        
-        # 2. Insert the last element of the heap list which is a leaf node and insert it to the root
-        if(self.size > 1):
-            self.insert(self.heap_list.pop())
-        # 3. Call heapify() on the root to fix the error it may have caused. 
-            self.max_heapify(1)
-    
+        popped = self.heap_list[0]
+        self.heap_list[0] = self.heap_list.pop()
+        self.max_heapify(0)
         return popped
 
-####################################
-#                                  #
-#   Example run of a MIN HEAP run  #
-#                                  #
-####################################
+    def __str__(self):
+        return str(self.heap_list)
+
 
 def main():
-
-    # Same tree as above example.
-    my_heap = Max_heap()
+    my_heap = MaxHeap()
     my_heap.insert(1)
     print(my_heap)
     my_heap.insert(4)
@@ -126,26 +98,18 @@ def main():
     print(my_heap)
     my_heap.insert(17)
     print(my_heap)
-
     my_heap.insert(9)
     print(my_heap)
-    
     my_heap.insert(22)
     print(my_heap)
-    
 
-    print("\nSorted Output")
-    for i in range(my_heap.size):
+    print("\nSorted Output:")
+    while my_heap.size > 0:
         print(my_heap.extract_max())
 
-# 2. Second test 
-# Given an list of integers 
-
-    my_heap.build_max_heap([4,12,45,23,11])
+    print("\nBuilding from list [4, 12, 45, 23, 11]:")
+    my_heap.build_max_heap([4, 12, 45, 23, 11])
     print(my_heap)
-
-
-
 
 
 if __name__ == '__main__':
