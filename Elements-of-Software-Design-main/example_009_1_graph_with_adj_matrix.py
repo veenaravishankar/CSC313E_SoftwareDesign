@@ -144,7 +144,7 @@ class Graph():
     '''
     Do a Depth First Search in a given Graph. 
     '''
-    
+    pass
 
 
 
@@ -153,7 +153,7 @@ class Graph():
     '''
     Do the breadth first search in a graph
     '''
-    
+    pass
     
 def main():
   # create the Graph object
