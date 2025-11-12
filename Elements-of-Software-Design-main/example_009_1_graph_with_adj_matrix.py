@@ -144,31 +144,7 @@ class Graph():
     '''
     Do a Depth First Search in a given Graph. 
     '''
-    # create the Stack
-    the_stack = Stack()
-
-    # mark the vertex v as visited and push it on the Stack
-    (self.Vertices[v]).visited = True
-
-    print(self.Vertices[v])
     
-    the_stack.push(v)
-
-    # visit all the other vertices according to depth
-    while(not the_stack.is_empty()):
-      # get an adjacent unvisited vertex
-      u = self.get_adj_unvisited_vertex(the_stack.peek())
-      if (u == -1):
-        u = the_stack.pop()
-      else:
-        (self.Vertices[u]).visited = True
-        print (self.Vertices[u])
-        the_stack.push(u)
-
-    # the stack is empty, let us rest the flags
-    nVert = len(self.Vertices)
-    for i in range(nVert):
-      (self.Vertices[i]).visited = False
 
 
 
@@ -177,38 +153,6 @@ class Graph():
     '''
     Do the breadth first search in a graph
     '''
-    level_counter = 1
-    # create the Queue to do FIFO
-    frontier = Queue()
-
-    level = dict()
-
-    # add the start vertext into the queue
-    frontier.enqueue(start)
-    # set the level of start point
-    level[start] = 0
-
-    # While frontier is not empty open level by level. 
-    while not frontier.is_empty():
-      s = frontier.dequeue()
-      
-      # mark the vertex v as visited and push it on the Stack
-      (self.Vertices[s]).visited = True
-      print(self.Vertices[s])
-
-      next_nodes = [i for i, e in enumerate(self.adjMat[s]) if e != 0]
-
-      for vertex in next_nodes:
-        if(not self.Vertices[vertex].visited):
-          (self.Vertices[vertex]).visited = True
-          frontier.enqueue(vertex)
-          level[vertex]=level_counter
-      
-      level_counter += 1
-
-    print(level)
-
-
     
     
 def main():
