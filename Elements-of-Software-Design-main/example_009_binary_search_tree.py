@@ -137,6 +137,7 @@ class BST():
         elif (deleteNode.rChild == None):
             if (deleteNode == self.root):
                 self.root = deleteNode.lChild
+            #if there are grandchildren, then make the grandchild take the child's place
             elif (isLeft):
                 parent.lChild = deleteNode.lChild
             else:
